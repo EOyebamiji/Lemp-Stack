@@ -1,0 +1,5 @@
+.terraform
+.terraform.lock.hcl
+EOyebamiji-Lemp-key
+terraform.tfstate.backup
+terraform.tfstate
