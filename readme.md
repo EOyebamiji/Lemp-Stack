@@ -47,3 +47,28 @@ terraform apply -auto-approve
 ```
 ![terraform-apply](assets/terraform%20apply.PNG)
 
+Once the above step is completed, terraform runs the script and provides an output of the public and private ip address of the newly created EC2 instance running an Ubuntu Operating System.
+Next step is to ssh into the ec2 instance using the public ip from the output and the private key that will now be downloaded to your working directory.
+```
+ssh -i "name of your key pair" "user"@"your public ip address"
+ssh ubuntu@"public ip address"
+```
+![SSH-EC2](assets/ssh%20to%20ubuntu.PNG)
+
+Now you have remotely connected into your instance, you can confirm the installation of PHP, MySql and Nginx which was done by our terraform script.
+- Open your prefered browser and input the below command to confirm the successful installation of nginx, php
+```
+"your public ip":80
+```
+![nginx](assets/nginx%20default%20portal.PNG)
+
+```
+"your public ip".index.php
+```
+![php](assets/php%20info.PNG)
+
+Once you have done that, now let's progress to step four (4).
+
+### CONFIGURING NGINX TO USE PHP PROCESSOR
+
+
