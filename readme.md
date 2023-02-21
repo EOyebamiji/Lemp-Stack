@@ -62,13 +62,16 @@ ssh ubuntu@"public ip address"
 Now you have remotely connected into your instance, you need to carry out a few configurations.
 # Nginx
 Type in the following commands to confirm the status of your nginx server
+
 ```
 sudo systemctl status nginx
 curl http://localhost:80
 ```
+
 ![nginx](assets/systemctl%20enginx.PNG)
 
 Now, the nginx server is accessible via your publiic ip address, Open your prefered browser and type in
+
 ```
 "your public ip address":80
 ```
@@ -78,27 +81,32 @@ We can now confirm that the Nginx server is Up.
 
 # MySql
 Type in the below command to login to the mysql enviroment and test your installation
+
 ```
 sudo mysql
 ```
 ![sudo-sql](assets/sudo%20mysql.PNG)
 
 In the Mysql enviroment, One of the first thing to do after installing mysql server is to run a security script to remove insecure default settings and lock down access to our database system. Use the following command. You can specify your prefered password in the password phase
+
 ```
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
 ![mysql-pass](assets/alter%20mysql.PNG)
 
 Now exit the Mysql enviroment by typing "exit". The next step is to setup an interactive scripting plugin to validate our passwords.
+
 ```
 sudo mysql_secure_installation
 ```
+
 ![mysql-secure-installation](assets/mqsql%20secure%20installation.PNG)
 
 The above command will respond with an interactive session where you have to decide if you want to retain the password your created earlier or change to another one. Once done, progress to the next step which is to test login access to your mysql using your password.
 ```
 sudo mysql -p
 ```
+
 ![mysql-passsword-test](assets/mysql%20password%20test.PNG)
 
 once you type the above command, input your password and type enter. Then exit mysql.
@@ -192,6 +200,7 @@ Now our Php information page is now accessible from the below url
 ```
 "Your public ip address"/info.php
 ```
+
 ![php-info](assets/php%20info.PNG)
 
 Now we have tested the connection between our Php and Nginx, we need to delete the new file we created above as it contains sensitive informations about our php environment. Security is on of the key factors in DevOps, as such we should carry out best security practices in our projects.
