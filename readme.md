@@ -49,6 +49,10 @@ terraform apply -auto-approve
 
 Once the above step is completed, terraform runs the script and provides an output of the public and private ip address of the newly created EC2 instance running an Ubuntu Operating System.
 Next step is to ssh into the ec2 instance using the public ip from the output and the private key that will now be downloaded to your working directory.
+
+You can confirm that the ec2 instance is running via the aws console (GUI) and also confirm the public ip address
+![aws-gui](assets/ec2%20instance.PNG)
+
 ```
 ssh -i "name of your key pair" "user"@"your public ip address"
 ssh ubuntu@"public ip address"
@@ -96,3 +100,45 @@ The above command will respond with an interactive session where you have to dec
 sudo mysql -p
 ```
 ![mysql-passsword-test](assets/mysql%20password%20test.PNG)
+
+once you type the above command, input your password and type enter. Then exit mysql.
+
+## CONFIGURING NGINX TO USE PHP PROCESSOR
+Now that you can confirm all requiremnts installed and configured. We need to configure Nginx to use Php.
+Now create the root web directory for your "domain"
+```
+sudo mkdir /var/www/LEMP
+```
+Next step is to change ownership of the created directory to the $USER
+```
+sudo chown -R $USER:$USER /var/www/LEMP
+```
+Once done, create and open a new configuration file in Nginx's directory using your prefered editor (Nano or Vim). I'll be using nano
+```
+sudo nano /etc/nginx/sites-available/LEMP
+```
+This is create a blank file in editor mode, copy and paste the below configurations into the created file.
+```
+server {
+    listen 80;
+    server_name LEMP www.LEMP;
+    root /var/www/LEMP;
+
+    index index.html index.htm index.php;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+     }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+```
+![nano-lemp](assets/nano%20-lemp.PNG)
+![cmd-codes](assets/cmds%20php.PNG)
