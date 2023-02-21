@@ -141,4 +141,35 @@ server {
 }
 ```
 ![nano-lemp](assets/nano%20-lemp.PNG)
+
 ![cmd-codes](assets/cmds%20php.PNG)
+
+Once you paste the copied configuration to the created file, use Ctrl+X and Y to exit and save the configuration.
+
+Next step is to activate your new configuration by linking it to the configuration file in the Nginx directory
+```
+sudo ln -s /etc/nginx/sites-available/LEMP /etc/nginx/sites-enabled/
+```
+Once the above is done, you need to test your configuration for syntx error 
+```
+sudo nginx -t
+```
+![test](assets/nginx%20config%20file.PNG)
+
+Next step is to diable the default Nginx host configured and currently listening on port 80 as we need our new configuration to be accessible through port 80
+```
+sudo unlink /etc/nginx/sites-enabled/default
+```
+
+Your weebsite iw now active but empty, Now we need to create an index.html file and include some configuration
+```
+sudo echo 'Hello, My name is Emmanuel Oyebamiji, I am a DevOps Intern at SymIOT Limited, This is one of my DevOps project, Creating of a LEMP Stack using terraform. Here is my host name' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/LEMP/index.html
+```
+You can edit the content to what you like. 
+
+Now our website up and running with content and is accessible via
+```
+"Your public ip address":80
+```
+
+![connection](assets/connection.PNG)
