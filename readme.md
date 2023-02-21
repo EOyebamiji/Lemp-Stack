@@ -55,15 +55,44 @@ ssh ubuntu@"public ip address"
 ```
 ![SSH-EC2](assets/ssh%20to%20ubuntu.PNG)
 
-Now you have remotely connected into your instance, you can confirm the installation of PHP, MySql and Nginx which was done by our terraform script.
-- Open your prefered browser and input the below command to confirm the successful installation of nginx.
+Now you have remotely connected into your instance, you need to carry out a few configurations.
+# Nginx
+Type in the following commands to confirm the status of your nginx server
 ```
-"your public ip":80
+sudo systemctl status nginx
+curl http://localhost:80
+```
+![nginx](assets/systemctl%20enginx.PNG)
+
+Now, the nginx server is accessible via your publiic ip address, Open your prefered browser and type in
+```
+"your public ip address":80
 ```
 ![nginx](assets/nginx%20default%20portal.PNG)
 
-Once you have done that, now let's progress to step four (4).
+We can now confirm that the Nginx server is Up.
 
-### CONFIGURING NGINX TO USE PHP PROCESSOR
+# MySql
+Type in the below command to login to the mysql enviroment and test your installation
+```
+sudo mysql
+```
+![sudo-sql](assets/sudo%20mysql.PNG)
 
+In the Mysql enviroment, One of the first thing to do after installing mysql server is to run a security script to remove insecure default settings and lock down access to our database system. Use the following command. You can specify your prefered password in the password phase
+```
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+```
+![mysql-pass](assets/alter%20mysql.PNG)
 
+Now exit the Mysql enviroment by typing "exit". The next step is to setup an interactive scripting plugin to validate our passwords.
+```
+sudo mysql_secure_installation
+```
+![mysql-secure-installation](assets/mqsql%20secure%20installation.PNG)
+
+The above command will respond with an interactive session where you have to decide if you want to retain the password your created earlier or change to another one. Once done, progress to the next step which is to test login access to your mysql using your password.
+```
+sudo mysql -p
+```
+![mysql-passsword-test](assets/mysql%20password%20test.PNG)
