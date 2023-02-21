@@ -173,3 +173,116 @@ Now our website up and running with content and is accessible via
 ```
 
 ![connection](assets/connection.PNG)
+
+## TESTING PHP WITH NGINX
+After completing the above steps, we are half way done with this project.
+Next step is to test our php configuration with our Nginx server.
+
+Now you need to create a new file in the /var/www/LEMP directory using your favourtite editor (Nano or Vim)
+```
+sudo nano /var/www/LEMP/info.php
+```
+Next step is to provide content into the created file, now copy the below configuration and past into the file
+```
+<?php
+phpinfo();
+```
+
+Now our Php information page is now accessible from the below url
+```
+"Your public ip address"/info.php
+```
+![php-info](assets/php%20info.PNG)
+
+Now we have tested the connection between our Php and Nginx, we need to delete the new file we created above as it contains sensitive informations about our php environment. Security is on of the key factors in DevOps, as such we should carry out best security practices in our projects.
+
+## RETRIEVING DATA FROM MYSQL DATABASE WITH PHP
+
+The goal in this step is to create a test database (DB) with simple "To do list" and configure access to it, so the Nginx website would be able to query data from the DB and display it. 
+As such, I created a database called 'emmanuel_database' and a user called 'emmanuel_user'.
+
+Next step is to connect back to your Mysql login and create a database and user
+
+Login using
+```
+sudo mysql -p
+```
+![mysql-passsword-test](assets/mysql%20password%20test.PNG)
+
+In the mysql terminal, create a database using
+```
+CREATE DATABASE
+emmanuel_database
+;
+```
+
+Next step is to create a new user and grant him full privileges on the database. And grant the user priviledges to the database
+
+```
+CREATE USER 'emmanuel_user'@'%' IDENTIFIED WITH mysql_native_password BY 'PassWord1@';
+GRANT ALL ON emmanuel_database TO 'emmanuel_user'@'%';
+```
+
+Now exit the mysql terminal and re-login to the mysql terminal using the uer id and password you have just created
+```
+mysql -u emmanuel_user -p "pasword"
+```
+
+Once you have re-login to the mysql terminal, next step is to create a table in the database created called "To-DO List"
+```
+CREATE TABLE emmanuel_database.todo_list (
+item_id INT AUTO_INCREMENT,
+content VARCHAR(255),
+PRIMARY KEY(item_id)
+);
+```
+Next step is to populate the table with some few details, using
+```
+INSERT INTO emmanuel_database.todo_list (content) VALUES ("My first important item");
+INSERT INTO emmanuel_database.todo_list (content) VALUES ("My first DevOps Assignment");
+INSERT INTO emmanuel_database.todo_list (content) VALUES ("Creation of LEMP Stack Using Terraform");
+```
+
+Next step is confirm the successful inclusion of the created details in the database table, using
+
+```
+SELECT * FROM emmanuel_database.todo_list;
+```
+
+next step is to exit the mysql terminal and create a new php file in your custom root directory using your prefered editor (Nano or Vim)
+```
+nano /var/www/LEMP/todo_list.php
+```
+Next step is to paste the below code into the created file and save it
+```
+<?php
+$user = "emmanuel_user";
+$password = "PassWord1@";
+$database = "emmanuel_database";
+$table = "todo_list";
+
+try {
+  $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
+  echo "<h2>TODO</h2><ol>";
+  foreach($db->query("SELECT content FROM $table") as $row) {
+    echo "<li>" . $row['content'] . "</li>";
+  }
+  echo "</ol>";
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br/>";
+    die();
+}
+```
+
+Once the above is done, navigate to your preferred web browser and open your newly created table uisng
+```
+"your public ip"/todo_list.php
+```
+![todo-list](assets/todo-list.PNG)
+
+
+Here marks the end of our project as we have been able to achieve the task at hand.
+
+Please Feel free to clone this repo and pull a request should you have any improvement to this project. 
+
+Thank you.
