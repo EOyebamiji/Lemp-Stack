@@ -56,16 +56,11 @@ ssh ubuntu@"public ip address"
 ![SSH-EC2](assets/ssh%20to%20ubuntu.PNG)
 
 Now you have remotely connected into your instance, you can confirm the installation of PHP, MySql and Nginx which was done by our terraform script.
-- Open your prefered browser and input the below command to confirm the successful installation of nginx, php
+- Open your prefered browser and input the below command to confirm the successful installation of nginx.
 ```
 "your public ip":80
 ```
 ![nginx](assets/nginx%20default%20portal.PNG)
-
-```
-"your public ip".index.php
-```
-![php](assets/php%20info.PNG)
 
 Once you have done that, now let's progress to step four (4).
 
