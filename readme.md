@@ -20,3 +20,18 @@ We intend to acheieve the below listed activities/tasks:
 -   TESTING OUR NEW PROJECT
 
 Steps one(1) to three will be achieved using the provisioner module within terraform. Hence, this write up will be focused on step five(5) to seven(7).
+
+## Prequisite Step
+- Clone the repo
+- Open the main.tf file (Make adjustment where necessary e.g. Key Pair Name, Tags etc)
+- Open your preferred cli (My prefered cli tool for windows is Git Bash)
+- export your aws profile (If you have multiple profiles like)
+```
+export AWS_PROFILE="profile name"
+```
+- Initialise the project 
+```
+terraform init
+```
+
+![terraform-init](assets/terraform%20init.PNG)
