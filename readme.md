@@ -29,9 +29,21 @@ Steps one(1) to three will be achieved using the provisioner module within terra
 ```
 export AWS_PROFILE="profile name"
 ```
-- Initialise the project 
+- Initialise the project - Terraform initializes the working directory containing the configuration file and install the necessary plugins 
 ```
 terraform init
 ```
-
 ![terraform-init](assets/terraform%20init.PNG)
+
+- Plan the project - This provodes a summary of the changes about to be effected into your AWS account
+```
+terraform plan
+```
+![terraform-plan](assets/terraform%20plan.PNG)
+
+- After you confirm the planned changes, apply the configuration into your account
+```
+terraform apply -auto-approve
+```
+![terraform-apply](assets/terraform%20apply.PNG)
+
